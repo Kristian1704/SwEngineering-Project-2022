@@ -16,8 +16,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController extends CommonCrudRestController<UserDTO, Long> {
+
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UserController(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public ResponseEntity<Void> createObject(@RequestBody UserDTO dto) throws URISyntaxException {

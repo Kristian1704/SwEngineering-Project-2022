@@ -10,10 +10,14 @@ import javax.annotation.PostConstruct;
 @Component
 public class ExceptionMessageUtilImpl implements ExceptionMessageUtil{
 
-    @Autowired
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
 
     private MessageSourceAccessor accessor;
+
+    @Autowired
+    public ExceptionMessageUtilImpl(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @PostConstruct
     public void init() {

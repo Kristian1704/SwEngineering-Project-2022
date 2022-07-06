@@ -22,23 +22,25 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private UserDetailsService userDetailsService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
-    private AuthenticationFailureHandler authFailureHandler;
+    private final AuthenticationFailureHandler authFailureHandler;
+    private final UserDetailsService userDetailsService;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     private static final AntPathRequestMatcher[] defaultPermittedMatchers = new AntPathRequestMatcher[]
             {
                     new AntPathRequestMatcher(SecurityConstants.AUTHENTICATION_ENDPOINT, HttpMethod.POST.toString()),
                     new AntPathRequestMatcher(SecurityConstants.USER_REGISTRATION_ENDPOINT, HttpMethod.POST.toString())
             };
+
+    @Autowired
+    public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder, JwtUtil jwtUtil, AuthenticationFailureHandler authFailureHandler) {
+        this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
+        this.authFailureHandler = authFailureHandler;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

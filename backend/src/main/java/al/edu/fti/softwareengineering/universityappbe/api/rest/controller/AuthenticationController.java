@@ -13,8 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/authentication")
 public class AuthenticationController {
+
+    private final AuthenticationService service;
+
     @Autowired
-    private AuthenticationService service;
+    public AuthenticationController(AuthenticationService service) {
+        this.service = service;
+    }
 
     @PostMapping
     public ResponseEntity<AuthenticationResponse> loginRequest(@RequestBody AuthenticationRequest authenticationRequest) {

@@ -18,11 +18,15 @@ import java.io.IOException;
  */
 @Component
 public class MyAuthHandler implements AuthenticationFailureHandler {
-    @Autowired
-    private ObjectMapper objectMapper;
+
+    private final ObjectMapper objectMapper;
+    private final ExceptionMessageUtil messageUtil;
 
     @Autowired
-    private ExceptionMessageUtil messageUtil;
+    public MyAuthHandler(ObjectMapper objectMapper, ExceptionMessageUtil messageUtil) {
+        this.objectMapper = objectMapper;
+        this.messageUtil = messageUtil;
+    }
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
